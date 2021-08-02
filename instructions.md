@@ -14,7 +14,7 @@ We're going to put to good use our knowledge of fetch by creating a full client 
 **Instructions**
 
 - Use this template as a starting point. **Make sure you download it into your laptop** => https://codesandbox.io/s/instabool-template-cwhm7?file=/index.html
-- Set up your json-server using the files in the db folder; **You must start the server on your local machine, using this exact command from the terminal on the root of your project folder: `json-server --watch db.json --routes routes.json`**
+- Set up your json-server using the files in the db folder; **You must start the server on your local machine, using this exact command from the terminal on the root of your project folder: `json-server --watch db/db.json --routes db/routes.json`**
 - Dynamically render the posts using the `card` HTML portion that you'll find in the index.html
 - Try to use the same CSS classes to achieve the desired look
 - Have the like button adding 1 like to the respective counter each time you click it
