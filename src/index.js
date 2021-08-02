@@ -125,3 +125,20 @@ function renderPostCards(arr) {
   });
 }
 
+// TODO: FIGURE OUT HOW TO GET COMMENT CONTENT FOR SPECIFIC
+//          IMAGE(COMPARING ID(FROM IMAGE) WITH imageId provided in comments[])
+function renderCommentsSection(arr) {
+  arr.forEach((elem) => {
+    console.log(
+      "Element inside renderCommentsSection: ",
+      elem.comments.forEach((elem) =>
+        console.log("elems in forEach: ", elem.content)
+      )
+    );
+    const commentElem = document.createElement("li");
+    if (elem.comments.forEach((elem) => elem.imageId) === elem.id) {
+      commentElem.innerText = elem.comments;
+    }
+    document.querySelector(".comments").append(commentElem);
+  });
+}
