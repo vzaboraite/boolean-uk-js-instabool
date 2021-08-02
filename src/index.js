@@ -47,23 +47,21 @@ fetch("http://localhost:3000/images")
     // You only have access to the images array inside this .then function
     // So where do you need to call your render functions???
     renderPostCards(images);
-    renderCommentsSection(images);
   });
 
 console.log("images: ", images);
 
-let comments = [];
-fetch("http://localhost:3000/comments")
-  .then((res) => res.json())
-  .then((data) => {
-    // console.log("Inside GET Fetch: ", data);
-    // console.log("Comments inside fetch: ", data);
-    comments = data;
+// TODO: do I need this array?
+// let comments = [];
+// fetch("http://localhost:3000/comments")
+//   .then((res) => res.json())
+//   .then((data) => {
+//     // console.log("Inside GET Fetch: ", data);
+//     // console.log("Comments inside fetch: ", data);
+//     comments = data;
+//   });
 
-    // renderCommentsSection(comments);
-  });
-
-console.log("comments: ", comments);
+// console.log("comments: ", comments);
 
 // Anchor elements
 const imageContainerElem = document.querySelector(".image-container");
@@ -106,6 +104,12 @@ function renderPostCards(arr) {
     commentsElem.setAttribute("class", "comments");
     imageCardElem.append(commentsElem);
 
+    elem.comments.forEach((comment) => {
+      const commentElem = document.createElement("li");
+      commentElem.innerText = comment.content;
+      commentsElem.append(commentElem);
+    });
+
     const commentFormElem = document.createElement("form");
     commentFormElem.setAttribute("class", "comment-form");
     imageCardElem.append(commentFormElem);
@@ -122,23 +126,5 @@ function renderPostCards(arr) {
     commentBtnElem.setAttribute("type", "submit");
     commentBtnElem.innerText = "Post";
     commentFormElem.append(commentBtnElem);
-  });
-}
-
-// TODO: FIGURE OUT HOW TO GET COMMENT CONTENT FOR SPECIFIC
-//          IMAGE(COMPARING ID(FROM IMAGE) WITH imageId provided in comments[])
-function renderCommentsSection(arr) {
-  arr.forEach((elem) => {
-    console.log(
-      "Element inside renderCommentsSection: ",
-      elem.comments.forEach((elem) =>
-        console.log("elems in forEach: ", elem.content)
-      )
-    );
-    const commentElem = document.createElement("li");
-    if (elem.comments.forEach((elem) => elem.imageId) === elem.id) {
-      commentElem.innerText = elem.comments;
-    }
-    document.querySelector(".comments").append(commentElem);
   });
 }
