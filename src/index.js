@@ -2,14 +2,16 @@
 1.0 to START THE SERVER run this command in vscode terminal:
     json-server --watch db/db.json --routes db/routes.json
 
+1.1 get data from db/db.json and set it to variable
+
 2.0 use anchor element to append post articles:
-    const imageContainerElem = document.querrySelector(".image-container")
+    const imageContainerElem = document.querySelector(".image-container")
 
 3.0 Create renderImageCard():
     - use example in index.html (<article class="image-card">...)
 
-    - input: -
-    - output: imageCardElem ?
+    - input: images[]
+    - output: -
 
 
 3.1 Create renderPosts():
