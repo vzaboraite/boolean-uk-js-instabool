@@ -70,3 +70,58 @@ const imageContainerElem = document.querySelector(".image-container");
 
 // console.log(imageContainerElem);
 
+// RENDER FUNCTIONS
+
+function renderPostCards(arr) {
+  arr.forEach((elem) => {
+    const imageCardElem = document.createElement("article");
+    imageCardElem.setAttribute("class", "image-card");
+    imageContainerElem.append(imageCardElem);
+
+    const titleElem = document.createElement("h2");
+    titleElem.setAttribute("class", "title");
+    titleElem.innerText = elem.title;
+    imageCardElem.append(titleElem);
+
+    const imageElem = document.createElement("img");
+    imageElem.setAttribute("class", "image");
+    imageElem.setAttribute("src", elem.image);
+    imageCardElem.append(imageElem);
+
+    const likesSectionElem = document.createElement("div");
+    likesSectionElem.setAttribute("class", "likes-section");
+    imageCardElem.append(likesSectionElem);
+
+    const likesElem = document.createElement("span");
+    likesElem.setAttribute("class", "likes");
+    likesElem.innerText = `${elem.likes} likes`;
+    likesSectionElem.append(likesElem);
+
+    const likeBtnElem = document.createElement("button");
+    likeBtnElem.setAttribute("class", "like-button");
+    likeBtnElem.innerText = "♥";
+    likesSectionElem.append(likeBtnElem);
+
+    const commentsElem = document.createElement("ul");
+    commentsElem.setAttribute("class", "comments");
+    imageCardElem.append(commentsElem);
+
+    const commentFormElem = document.createElement("form");
+    commentFormElem.setAttribute("class", "comment-form");
+    imageCardElem.append(commentFormElem);
+
+    const commentInputElem = document.createElement("input");
+    commentInputElem.setAttribute("class", "comment-input");
+    commentInputElem.setAttribute("type", "text");
+    commentInputElem.setAttribute("name", "comment");
+    commentInputElem.setAttribute("placeholder", "Add a comment...");
+    commentFormElem.append(commentInputElem);
+
+    const commentBtnElem = document.createElement("button");
+    commentBtnElem.setAttribute("class", "comment-button");
+    commentBtnElem.setAttribute("type", "submit");
+    commentBtnElem.innerText = "Post";
+    commentFormElem.append(commentBtnElem);
+  });
+}
+
