@@ -130,6 +130,35 @@ function renderPostCards(postsData) {
 
     const commentFormElem = document.createElement("form");
     commentFormElem.setAttribute("class", "comment-form");
+    commentFormElem.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!commentInputElem.value) {
+        return;
+      }
+
+      const fetchOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: commentInputElem.value,
+          imageId: post.id,
+        }),
+      };
+
+      fetch("http://localhost:3000/comments", fetchOptions)
+        .then((res) => res.json())
+        .then((commentData) => {
+          post.comments.push(commentData);
+
+          const newCommentElem = document.createElement("li");
+          newCommentElem.innerText = commentData.content;
+          commentsElem.append(newCommentElem);
+        });
+      commentFormElem.reset();
+    });
     imageCardElem.append(commentFormElem);
 
     const commentInputElem = document.createElement("input");
