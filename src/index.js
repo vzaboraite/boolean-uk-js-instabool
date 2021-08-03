@@ -37,28 +37,26 @@ let images = [];
 
 fetch("http://localhost:3000/images")
   .then((res) => res.json())
-  .then((data) => {
-    // console.log("Inside GET Fetch: ", data);
+  .then((imageData) => {
+    // console.log("Inside GET Fetch: ", imageData);
 
-    images = data;
+    images = imageData;
 
     // console.log("Timing problem solution: ", images);
+    // console.log("images: ", images);
 
     // You only have access to the images array inside this .then function
     // So where do you need to call your render functions???
     renderPostCards(images);
   });
 
-console.log("images: ", images);
-
-// TODO: do I need this array?
 // let comments = [];
 // fetch("http://localhost:3000/comments")
 //   .then((res) => res.json())
-//   .then((data) => {
-//     // console.log("Inside GET Fetch: ", data);
-//     // console.log("Comments inside fetch: ", data);
-//     comments = data;
+//   .then((comentData) => {
+//     // console.log("Inside GET Fetch: ", comentData);
+//     // console.log("Comments inside fetch: ", comentData);
+//     comments = comentData;
 //   });
 
 // console.log("comments: ", comments);
@@ -70,20 +68,21 @@ const imageContainerElem = document.querySelector(".image-container");
 
 // RENDER FUNCTIONS
 
-function renderPostCards(arr) {
-  arr.forEach((elem) => {
+function renderPostCards(postsData) {
+  postsData.forEach((post) => {
     const imageCardElem = document.createElement("article");
+    console.log(post);
     imageCardElem.setAttribute("class", "image-card");
     imageContainerElem.append(imageCardElem);
 
     const titleElem = document.createElement("h2");
     titleElem.setAttribute("class", "title");
-    titleElem.innerText = elem.title;
+    titleElem.innerText = post.title;
     imageCardElem.append(titleElem);
 
     const imageElem = document.createElement("img");
     imageElem.setAttribute("class", "image");
-    imageElem.setAttribute("src", elem.image);
+    imageElem.setAttribute("src", post.image);
     imageCardElem.append(imageElem);
 
     const likesSectionElem = document.createElement("div");
@@ -92,19 +91,38 @@ function renderPostCards(arr) {
 
     const likesElem = document.createElement("span");
     likesElem.setAttribute("class", "likes");
-    likesElem.innerText = `${elem.likes} likes`;
+    likesElem.innerText = `${post.likes} likes`;
     likesSectionElem.append(likesElem);
 
     const likeBtnElem = document.createElement("button");
     likeBtnElem.setAttribute("class", "like-button");
     likeBtnElem.innerText = "♥";
+    likeBtnElem.addEventListener("click", () => {
+      console.log("clicked: ", post.id, post.likes);
+
+      const fetchOptions = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likes: post.likes + 1 }),
+      };
+
+      fetch(`http://localhost:3000/images/${post.id}`, fetchOptions)
+        .then((res) => res.json())
+        .then((imageData) => {
+          console.log("Inside PATCH Fetch: ", imageData);
+          likesElem.innerText = `${(post.likes += 1)} likes`;
+        });
+    });
+
     likesSectionElem.append(likeBtnElem);
 
     const commentsElem = document.createElement("ul");
     commentsElem.setAttribute("class", "comments");
     imageCardElem.append(commentsElem);
 
-    elem.comments.forEach((comment) => {
+    post.comments.forEach((comment) => {
       const commentElem = document.createElement("li");
       commentElem.innerText = comment.content;
       commentsElem.append(commentElem);
