@@ -38,40 +38,19 @@ let images = [];
 fetch("http://localhost:3000/images")
   .then((res) => res.json())
   .then((imageData) => {
-    // console.log("Inside GET Fetch: ", imageData);
-
     images = imageData;
 
-    // console.log("Timing problem solution: ", images);
-    // console.log("images: ", images);
-
-    // You only have access to the images array inside this .then function
-    // So where do you need to call your render functions???
     renderPostCards(images);
   });
 
-// let comments = [];
-// fetch("http://localhost:3000/comments")
-//   .then((res) => res.json())
-//   .then((comentData) => {
-//     // console.log("Inside GET Fetch: ", comentData);
-//     // console.log("Comments inside fetch: ", comentData);
-//     comments = comentData;
-//   });
-
-// console.log("comments: ", comments);
-
 // Anchor elements
 const imageContainerElem = document.querySelector(".image-container");
-
-// console.log(imageContainerElem);
 
 // RENDER FUNCTIONS
 
 function renderPostCards(postsData) {
   postsData.forEach((post) => {
     const imageCardElem = document.createElement("article");
-    console.log(post);
     imageCardElem.setAttribute("class", "image-card");
     imageContainerElem.append(imageCardElem);
 
@@ -98,8 +77,6 @@ function renderPostCards(postsData) {
     likeBtnElem.setAttribute("class", "like-button");
     likeBtnElem.innerText = "♥";
     likeBtnElem.addEventListener("click", () => {
-      console.log("clicked: ", post.id, post.likes);
-
       const fetchOptions = {
         method: "PATCH",
         headers: {
@@ -111,7 +88,6 @@ function renderPostCards(postsData) {
       fetch(`http://localhost:3000/images/${post.id}`, fetchOptions)
         .then((res) => res.json())
         .then((imageData) => {
-          console.log("Inside PATCH Fetch: ", imageData);
           likesElem.innerText = `${(post.likes += 1)} likes`;
         });
     });
