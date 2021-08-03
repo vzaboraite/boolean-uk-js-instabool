@@ -1,6 +1,6 @@
 /*
 1.0 to START THE SERVER run this command in vscode terminal:
-    json-server --watch db/db.json --routes db/routes.json
+    json-server --watch db/db.json --routes db/routes.json --static .
 
 1.1 get data from db/db.json and set it to variable
 
